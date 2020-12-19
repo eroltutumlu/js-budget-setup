@@ -17,7 +17,40 @@ class UI {
   }
 
   submitBudgetForm(){
-    console.log('Budget form submitted!!');
+    const value = this.budgetInput.value;
+    if(value === '' || value < 0) {
+      this.budgetFeedback.classList.add('showItem');
+      this.budgetFeedback.innerHTML = `<p>Value can not be empty or negative</p>`;
+      const self = this;
+      setTimeout(function(){
+        self.budgetFeedback.classList.remove('showItem');
+      }, 4000)
+    } else {
+      this.budgetAmount.textContent = value;
+      this.budgetInput.value = '';
+      this.showBalance();
+    }
+  }
+
+  showBalance(){
+    const expense = this.totalExpense();
+    const total = parseInt(this.budgetAmount.textContent) - expense;
+    this.balanceAmount.textContent = total;
+    if(total < 0){
+      this.balance.classList.remove('showGreen', 'showBlack');
+      this.balance.classList.add('showRed');
+    }else if(total > 0){
+      this.balance.classList.remove('showRed', 'showBlack');
+      this.balance.classList.add('showGreen');
+    }else if(total === 0){
+      this.balance.classList.remove('showRed', 'showGreen');
+      this.balance.classList.add('showBlack');
+    }
+  }
+
+  totalExpense(){
+    let total = 300;
+    return total;
   }
 
 
